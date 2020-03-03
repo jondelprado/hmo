@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
 use App\DoctorClaim;
 use App\DoctorPatient;
 use App\DoctorService;
+use App\Coordinator;
 
 class DoctorController extends Controller
 {
@@ -110,20 +110,8 @@ class DoctorController extends Controller
         }
       }
 
-      // foreach ($request->input('patient_service') as $patient_service => $service) {
-      //
-      //   $service = new DoctorService();
-      //
-      //   $service->service_name = $request->input('patient_first')[$patient_service];
-      //   $service->patient_id = $request->input('patient_id');
-      //
-      //   $service->save();
-      //
-      // }
 
       return redirect('http://localhost/hmo/public/claims/doctor/create');
-
-      // echo '<pre>' , var_dump($info) , '</pre>';
 
     }
 
@@ -135,7 +123,22 @@ class DoctorController extends Controller
      */
     public function show($id)
     {
-        //
+
+      $doctorSidebar = array(
+        'claims_menu' => 'claims-open',
+        'claims_link' => 'claims-active',
+        'doctor_link' => 'doctor-open'
+      );
+
+      $doctor = DoctorClaim::find($id);
+
+      $coordinator = Coordinator::where('employee_id', $doctor->coordinator_id)->get();
+
+      return view('coordinator.claims.doctor.view')
+        ->with('doctor', $doctor)
+        ->with('coordinator', $coordinator)
+        ->with($doctorSidebar);
+
     }
 
     /**
