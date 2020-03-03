@@ -13,6 +13,4 @@ class DoctorPatient extends Model
 
     public $timestamps = true;
 
-    // protected $fillable = ['claim_id', 'firstname', 'lastname', 'middlename', 'amount', 'patient_id', 'card_id'];
-
 }

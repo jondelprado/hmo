@@ -23,7 +23,11 @@ class DoctorController extends Controller
           'doctor_link' => 'doctor-open'
         );
 
-        return view('coordinator.claims.doctor.index')->with($doctorSidebar);
+        $doctorClaims = DoctorClaim::all();
+
+        return view('coordinator.claims.doctor.index')
+          ->with('claims', $doctorClaims)
+          ->with($doctorSidebar);
     }
 
     /**
@@ -51,56 +55,75 @@ class DoctorController extends Controller
     public function store(Request $request)
     {
 
-      // $this->validate($request, [
-      //   'doctor_first' => 'required',
-      //   'doctor_last' => 'required',
-      //   'hospital_name' => 'required',
-      //   'hospital_address' => 'required',
-      //   'doctor_mobile' => 'required',
-      //   'patient_first' => 'required',
-      //   'patient_last' => 'required',
-      //   'patient_card' => 'required',
-      //   'patient_service' => 'required',
-      //   'patient_amount' => 'required',
-      //   'claim_id' => 'required',
-      //   'patient_id' => 'required',
-      // ]);
-      //
-      // $doctor_claim = new DoctorClaim;
-      // $doctor_claim->firstname = $request->input('doctor_first');
-      // $doctor_claim->lastname = $request->input('doctor_last');
-      // $doctor_claim->middlename = $request->input('doctor_middle');
-      // $doctor_claim->telephone = $request->input('doctor_telephone');
-      // $doctor_claim->mobile = $request->input('doctor_mobile');
-      // $doctor_claim->hospital_name = $request->input('hospital_name');
-      // $doctor_claim->hospital_address = $request->input('hospital_address');
-      // $doctor_claim->coordinator_id = "123";
-      // $doctor_claim->claim_id = $request->input('claim_id');
-      // $doctor_claim->status = "1";
-      //
-      // $doctor_claim->save();
+      $this->validate($request, [
+        'doctor_first' => 'required',
+        'doctor_last' => 'required',
+        'hospital_name' => 'required',
+        'hospital_address' => 'required',
+        'doctor_mobile' => 'required',
+        'patient_first' => 'required',
+        'patient_last' => 'required',
+        'patient_card' => 'required',
+        'patient_service' => 'required',
+        'patient_amount' => 'required',
+        'claim_id' => 'required',
+        'patient_id' => 'required',
+      ]);
 
-      $info = [];
+      $doctor_claim = new DoctorClaim;
+      $doctor_claim->firstname = $request->input('doctor_first');
+      $doctor_claim->lastname = $request->input('doctor_last');
+      $doctor_claim->middlename = $request->input('doctor_middle');
+      $doctor_claim->telephone = $request->input('doctor_telephone');
+      $doctor_claim->mobile = $request->input('doctor_mobile');
+      $doctor_claim->hospital_name = $request->input('hospital_name');
+      $doctor_claim->hospital_address = $request->input('hospital_address');
+      $doctor_claim->coordinator_id = "123";
+      $doctor_claim->claim_id = $request->input('claim_id');
+      $doctor_claim->status = "1";
 
-      // $info = [
-      //   'patient_id' => $request->input('patient_id')
-      // ];
+      $doctor_claim->save();
 
-      foreach ($request->input('patient_id') as $p) {
-        foreach ($request->input('patient_first') as $f) {
+      foreach ($request->input('patient_id') as $patient_id => $id) {
 
-          $info[] = [
-            'patient_id' => $p,
-            'patient_first' => $f
-          ];
+        $patient = new DoctorPatient();
+
+        $patient->firstname = $request->input('patient_first')[$patient_id];
+        $patient->lastname = $request->input('patient_last')[$patient_id];
+        $patient->middlename = $request->input('patient_middle')[$patient_id];
+        $patient->card_id = $request->input('patient_card')[$patient_id];
+        $patient->patient_id = $request->input('patient_id')[$patient_id];
+        $patient->claim_id = $request->input('claim_id');
+        $patient->amount = $request->input('patient_amount')[$patient_id];
+
+        $patient->save();
+
+        foreach ($request->input('patient_service') as $patient_service => $service) {
+
+          $service = new DoctorService();
+
+          $service->service_name = $request->input('patient_first')[$patient_service];
+          $service->patient_id = $request->input('patient_id')[$patient_service];
+
+          $service->save();
 
         }
       }
 
+      // foreach ($request->input('patient_service') as $patient_service => $service) {
+      //
+      //   $service = new DoctorService();
+      //
+      //   $service->service_name = $request->input('patient_first')[$patient_service];
+      //   $service->patient_id = $request->input('patient_id');
+      //
+      //   $service->save();
+      //
+      // }
 
-      // return redirect('http://localhost/hmo/public/claims/doctor/create');
+      return redirect('http://localhost/hmo/public/claims/doctor/create');
 
-      echo '<pre>' , var_dump($info) , '</pre>';
+      // echo '<pre>' , var_dump($info) , '</pre>';
 
     }
 

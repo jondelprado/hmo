@@ -13,6 +13,4 @@ class DoctorService extends Model
 
   public $timestamps = true;
 
-  // protected $fillable = ['patient_id'];
-
 }

@@ -47,6 +47,7 @@ Route::resource('utilities/coordinator', 'CoordinatorController');
 Route::get('/utilities/coordinator/{coordinator}/view', 'CoordinatorController@show');
 //DOCTOR
 Route::resource('/claims/doctor', 'DoctorController');
+Route::get('/claims/doctor/{claim}/view', 'DoctorController@show');
 
 //MAINTENANCE
 Route::resource('/maintenance/category', 'CategoryController');
