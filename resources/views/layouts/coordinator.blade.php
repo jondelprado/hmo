@@ -55,6 +55,10 @@
   $(function(){
     $(".coordinator_table").DataTable();
     $(".select2").select2();
+    $(".services_list").select2({
+      tags: true,
+      placeholder: "Input Service(s) Done"
+    });
     $('.duallistbox').bootstrapDualListbox();
     // $(".currency").inputmask({
     //   removeMaskOnSubmit:true,
