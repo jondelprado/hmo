@@ -12,7 +12,6 @@
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item">Claims</li>
             <li class="breadcrumb-item active">Doctor</li>
-            <li>test</li>
           </ol>
         </div>
       </div>
