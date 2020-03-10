@@ -168,6 +168,58 @@
                   </div>
 
                   <div style="height: 650px; overflow-y: auto;" class="card-body">
+
+                    <div class="row">
+
+                      <div class="col-lg-12">
+                          @foreach ($patient as $pat)
+
+                            @php
+                              $fullname = $pat->lastname.', '.$pat->firstname.' '.$pat->middlename;
+                            @endphp
+
+
+                              <div class="row">
+
+                                <div class="col-lg-6">
+                                  <p><b>Name: </b></p>
+                                  <p><b>Card ID: </b></p>
+                                  <p><b>Total Amount: </b></p>
+                                </div>
+
+                                <div class="col-lg-6">
+                                  <p>{{strtoupper($fullname)}}</p>
+                                  <p>{{$pat->card_id}}</p>
+                                  <p>{{$pat->amount}}</p>
+                                </div>
+
+                                <div class="col-lg-12">
+                                  @foreach ($services as $service)
+                                    @if ($service->patient_id == $pat->patient_id)
+                                      <p>{{$service->service_name}}</p>
+                                    @endif
+                                  @endforeach
+                                </div>
+
+                            @endforeach
+
+                            {{-- <div class="col-lg-12">
+                              <h5>Medical Service(s) Conducted</h5>
+
+                              @foreach ($services as $service)
+                                <p>{{$service->service_name}}</p>
+                              @endforeach
+
+                            </div> --}}
+
+                            <div class="col-lg-12"><hr></div>
+
+                          </div>
+
+                        </div>
+
+                    </div>
+
                   </div>
 
                 </div>

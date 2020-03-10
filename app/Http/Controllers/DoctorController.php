@@ -133,9 +133,25 @@ class DoctorController extends Controller
       $doctor = DoctorClaim::find($id);
 
       $coordinator = Coordinator::where('employee_id', $doctor->coordinator_id)->get();
+      $patient = DoctorPatient::where('claim_id', $doctor->claim_id)->get();
+
+      $patientID = [];
+
+      foreach ($patient as $pat) {
+        $patientID[] = $pat->patient_id;
+      }
+
+      $services = DoctorService::whereIn('patient_id', $patientID)->get();
+
+
+      // echo '<pre>';
+      // echo var_dump($patientID);
+      // echo '</pre>';
 
       return view('coordinator.claims.doctor.view')
         ->with('doctor', $doctor)
+        ->with('patient', $patient)
+        ->with('services', $services)
         ->with('coordinator', $coordinator)
         ->with($doctorSidebar);
 
