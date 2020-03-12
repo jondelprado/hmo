@@ -172,6 +172,7 @@
                     <div class="row">
 
                       <div class="col-lg-12">
+                        <div class="row">
                           @foreach ($patient as $pat)
 
                             @php
@@ -179,7 +180,6 @@
                             @endphp
 
 
-                              <div class="row">
 
                                 <div class="col-lg-6">
                                   <p><b>Name: </b></p>
@@ -194,25 +194,21 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                  @foreach ($services as $service)
-                                    @if ($service->patient_id == $pat->patient_id)
-                                      <p>{{$service->service_name}}</p>
-                                    @endif
-                                  @endforeach
+                                  <p><i>Medical Service(s) Conducted</i></p>
+
+                                  <ul>
+                                    @foreach ($services as $service)
+                                      @if ($service->patient_id == $pat->patient_id)
+                                        <li>{{$service->service_name}}</li>
+                                      @endif
+                                    @endforeach
+                                  </ul>
+
                                 </div>
 
+
+                              <div class="col-lg-12"><hr></div>
                             @endforeach
-
-                            {{-- <div class="col-lg-12">
-                              <h5>Medical Service(s) Conducted</h5>
-
-                              @foreach ($services as $service)
-                                <p>{{$service->service_name}}</p>
-                              @endforeach
-
-                            </div> --}}
-
-                            <div class="col-lg-12"><hr></div>
 
                           </div>
 
@@ -227,6 +223,57 @@
               </div>
 
               <div class="col-lg-4">
+
+                <div class="card">
+
+                  <div class="card-header bg-warning">
+                    <h5 style="color: white;">Claim Status</h5>
+                  </div>
+
+                  <div style="height: 650px; overflow-y: auto;" class="card-body">
+
+                    <div class="alert alert-warning alert-dismissible">
+                      {{-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> --}}
+                      <h5><i class="icon fas fa-exclamation-triangle"></i> Pending!</h5><br>
+                      <i>This claim is still in Pending Status and will undergo some verification by Administrator.</i>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-body">
+
+                        <div class="row">
+
+                          <div class="col-lg-6">
+                            <b>Claim ID:</b>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <p>{{$doctor->claim_id}}</p>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <b>Date filed:</b>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <p>{{date('M j, Y \a\t g:i A', strtotime($doctor->created_at))}}</p>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <div class="form-group">
+                              <b>Remarks/Comments:</b><br>
+                              <textarea style="resize: none;" class="form-control" rows="5" name="name" readonly></textarea>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
 
               </div>
 
