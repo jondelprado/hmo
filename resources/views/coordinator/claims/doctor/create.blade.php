@@ -25,7 +25,64 @@
 
     <div class="row">
 
-      <div class="col-lg-7">
+      <div class="col-lg-6">
+
+        <div class="card">
+
+          <div class="card-body">
+
+            <table class="table table-bordered table-hover coordinator_table">
+
+              <thead>
+                <tr>
+                  <th>Claim ID</th>
+                  <th>Doctor</th>
+                  <th>Date Filed</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @php
+                  $status = "";
+                  $status_color = "";
+                @endphp
+                @foreach ($claims as $claim)
+                  @php
+
+                    if ($claim->status == "1") {
+                      $status = "Pending";
+                      $status_color = "orange";
+                    }
+                    elseif ($claim->status == "2") {
+                      $status = "Approved";
+                      $status_color = "lightgreen";
+                    }
+                    else {
+                      $status = "Denied";
+                      $status_color = "red";
+                    }
+
+                    $fullname = $claim->lastname. ', ' .$claim->firstname. ' ' .$claim->middlename;
+                  @endphp
+                  <tr>
+                    <td>{{$claim->claim_id}}</td>
+                    <td>{{strtoupper($fullname)}}</td>
+                    <td>{{date('M j, Y \a\t g:i A', strtotime($claim->created_at))}}</td>
+                    <td style="color: {{$status_color}}">{{$status}}</td>
+                  </tr>
+                @endforeach
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-lg-6">
 
         <div class="card">
 

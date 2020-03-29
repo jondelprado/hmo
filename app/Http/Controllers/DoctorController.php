@@ -37,13 +37,19 @@ class DoctorController extends Controller
      */
     public function create()
     {
+
       $doctorSidebar = array(
         'claims_menu' => 'claims-open',
         'claims_link' => 'claims-active',
         'doctor_link' => 'doctor-open'
       );
 
-      return view('coordinator.claims.doctor.create')->with($doctorSidebar);
+      $doctorClaims = DoctorClaim::all();
+
+      return view('coordinator.claims.doctor.create')
+        ->with('claims', $doctorClaims)
+        ->with($doctorSidebar);
+
     }
 
     /**
@@ -165,7 +171,16 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        //
+
+      $doctorSidebar = array(
+        'claims_menu' => 'claims-open',
+        'claims_link' => 'claims-active',
+        'doctor_link' => 'doctor-open'
+      );
+
+      return view()
+
+
     }
 
     /**
